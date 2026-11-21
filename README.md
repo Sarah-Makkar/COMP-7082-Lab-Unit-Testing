@@ -4,7 +4,7 @@
 
 ### 1. Invalid quantities when adding items
 
-**Location:** `cart.py` — `add_item(self, sku, quantity)`
+**Location:** `cart.py` - `add_item(self, sku, quantity)`
 
 **Problem:** No Quantity Validation - This function accepts zero, negative and non-integer values. A negative quantity gives a negative subtotal, fractional quantities can create fraction item quantity, a string quantity raises a TypeError.
 
@@ -36,7 +36,7 @@
 
 ### 2. Invalid quantities when removing items
 
-**Location:** `cart.py` — `remove_item(self, sku, quantity=None)`
+**Location:** `cart.py` -  `remove_item(self, sku, quantity=None)`
 
 **Problem:** No Quantity Validation - This function accepts zero, negative and non-integer values. A negative quantity can increase the item quantity in the cart, removing zero returns true without removing anything, fractional quantities can create fraction item quantity, a string quantity raises a TypeError.
 
@@ -59,7 +59,7 @@
 
 ### 3. Cumulative quantities can exceed stock
 
-**Location:** `cart.py` — `add_item(self, sku, quantity)`
+**Location:** `cart.py` - `add_item(self, sku, quantity)`
 
 **Problem:** The stock comparison checks only the new quantity. For example , with available stock 5, adding 3 items twice succeeded, leaving total of 6 items in the cart.
 
@@ -90,7 +90,7 @@ def add_item(self, sku, quantity):
 
 ### 4. Discounts stack and totals become outdated
 
-**Location:** `cart.py` — `apply_discount(self, code)`
+**Location:** `cart.py` - `apply_discount(self, code)`
 
 **Problem:** The function allows the same coupon to be applied repeatedly or multiple coupons to stack. The discounted total does not update when items are added or removed, and the SAVE15 coupon can produce a negative total.
 
@@ -123,7 +123,7 @@ def apply_discount(self, code):
 
 ### 5. Loading a saved cart duplicates items
 
-**Location:** `cart.py` — `load(self)`
+**Location:** `cart.py` - `load(self)`
 
 **Problem:** The function appends saved items to the cart every time it is called, i.e loading the same cart twice increases quantities instead of restoring the state.
 
@@ -139,7 +139,7 @@ def load(self):
 
 ### 6. SQL injection in repository lookups
 
-**Location:** `repository.py` — `get_product(self, sku)` and `get_saved_cart(self, user_id)`
+**Location:** `repository.py` - `get_product(self, sku)` and `get_saved_cart(self, user_id)`
 
 **Problem:** SQL injection in get_product and get_saved_cart
 
@@ -161,7 +161,7 @@ def get_saved_cart(self, user_id):
 
 ### 7. Order listings include other users' orders
 
-**Location:** `repository.py` — `list_orders(self, user_id)`
+**Location:** `repository.py` - `list_orders(self, user_id)`
 
 **Problem:** The function ignores the passed parameter user_id and returns every user’s  orders
 
@@ -177,7 +177,7 @@ def list_orders(self, user_id):
 
 ### 8. Checkout changes stock and clears carts after failed payments
 
-**Location:** `checkout.py` — `CheckoutService.checkout()`
+**Location:** `checkout.py` - `CheckoutService.checkout()`
 
 **Problem:** Stock is decremented before the payment. Even if payment is declined or runs into error, the stock is decremented. The cart is cleared even when payment fails. It also allowed missing request ID’s. It even printed sensitive payment tokens in logs
 
