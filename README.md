@@ -181,7 +181,7 @@ def list_orders(self, user_id):
 
 **Problem:** Stock is decremented before the payment. Even if payment is declined or runs into error, the stock is decremented. The cart is cleared even when payment fails. It also allowed missing request ID’s. It even printed sensitive payment tokens in logs
 
-**Correction:** Validate the request ID before processing. For the provided payment simulator, deduct stock and clear the cart only after payment is approved. Remove payment-token logging and reset discount details after a successful purchase.
+**Correction:** 
 
 ```python
 def checkout(self, cart, payment_token, request_id):
